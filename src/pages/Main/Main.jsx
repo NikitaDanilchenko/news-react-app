@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { NewsBunner } from "../../components/NewsBunner/NewsBunner";
 import styles from "./styles.module.css";
-import { getNews } from "../../api/apiNews";
+import { getCategories, getNews } from "../../api/apiNews";
 import { NewsList } from "../../components/NewsList/NewsList";
 import { Skeleton } from "../../components/Skeleton/Skeleton";
 import { Pagination } from "../../components/Pagination/Pagination";
+import { Categories } from "../../components/Categories/Categories";
 
 export const Main = () => {
     const [news, setNews] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("All");
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -16,7 +19,11 @@ export const Main = () => {
     const fetchNews = async (currentPage) => {
         try {
             setIsLoading(true);
-            const response = await getNews(currentPage, pageSize);
+            const response = await getNews({
+                page_number: currentPage,
+                page_size: pageSize,
+                category: selectedCategory === "All" ? null : selectedCategory,
+            });
             setNews(response.news);
             setIsLoading(false);
         } catch (error) {
@@ -26,45 +33,64 @@ export const Main = () => {
 
     useEffect(() => {
         fetchNews(currentPage);
-    }, [currentPage]);
+    }, [currentPage, selectedCategory]);
+
+    const fetchCategories = async () => {
+        try {
+            const response = await getCategories();
+            setCategories(["All", ...response.categories]);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        fetchCategories();
+    }, []);
 
     const handleNextPage = () => {
-        if(currentPage < totalPages) {
-            setCurrentPage(currentPage + 1)
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
         }
-    }
+    };
     const handlePreviousPage = () => {
-        if(currentPage > 1) {
-            setCurrentPage(currentPage - 1)
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
         }
-    }
+    };
     const handlePageClick = (pageNumber) => {
-            setCurrentPage(pageNumber)
-    }
+        setCurrentPage(pageNumber);
+    };
     return (
         <main className={styles.main}>
+            <Categories
+                categories={categories}
+                setSelectedCategory={setSelectedCategory}
+                selectedCategory={selectedCategory}
+            />
             {news.length > 0 && !isLoading ? (
                 <NewsBunner item={news[0]} />
             ) : (
                 <Skeleton type={"bunner"} count={1} />
             )}
-            <Pagination 
-            handleNextPage={handleNextPage}
-            handlePreviousPage={handlePreviousPage}
-            handlePageClick={handlePageClick}
-            currentPage={currentPage}
-            totalPages={totalPages}/>
+            <Pagination
+                handleNextPage={handleNextPage}
+                handlePreviousPage={handlePreviousPage}
+                handlePageClick={handlePageClick}
+                currentPage={currentPage}
+                totalPages={totalPages}
+            />
             {!isLoading ? (
                 <NewsList news={news} />
             ) : (
                 <Skeleton type={"item"} count={10} />
             )}
-            <Pagination 
-            handleNextPage={handleNextPage}
-            handlePreviousPage={handlePreviousPage}
-            handlePageClick={handlePageClick}
-            currentPage={currentPage}
-            totalPages={totalPages}/>
+            <Pagination
+                handleNextPage={handleNextPage}
+                handlePreviousPage={handlePreviousPage}
+                handlePageClick={handlePageClick}
+                currentPage={currentPage}
+                totalPages={totalPages}
+            />
         </main>
     );
 };
