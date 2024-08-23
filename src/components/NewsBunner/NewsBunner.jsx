@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 import { formatTimeAgo } from "../../helpers/formatTimeAgo";
+import withSkeleton from "../../helpers/hocs/WithSkeleton";
 import { Image } from "../Image/Image";
 import styles from "./styles.module.css";
-export const NewsBunner = ({ item }) => {
+
+const NewsBunner = ({ item }) => {
     return (
         <div className={styles.bunner}>
             <Image image={item?.image} />
@@ -13,3 +15,6 @@ export const NewsBunner = ({ item }) => {
         </div>
     );
 };
+
+const NewsBunnerWithSkeleton = withSkeleton(NewsBunner, "bunner", 1);
+export default NewsBunnerWithSkeleton;
