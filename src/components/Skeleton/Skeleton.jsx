@@ -3,11 +3,11 @@ import styles from "./styles.module.css";
 
 
 
-export const Skeleton = ({ count = 1, type = "bunner" }) => {
+export const Skeleton = ({ count = 1, type = "bunner", direction = 'column' }) => {
     return (
         <>
             {count > 1 ? (
-                <ul className={styles.list}>
+                <ul className={direction === 'column' ? styles.columnList : styles.rowList}>
                     {[...Array(count)].map((_, index) => (
                         <li
                             key={index}
