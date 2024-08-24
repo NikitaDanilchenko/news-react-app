@@ -3,5 +3,7 @@
     flex-direction: column;
     width: 100%;
     gap: 32px;
+    max-height: 1200px;
+    overflow-x: auto;
 }
 
