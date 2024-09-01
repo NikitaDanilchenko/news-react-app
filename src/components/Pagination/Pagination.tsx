@@ -1,12 +1,15 @@
 /* eslint-disable react/prop-types */
+import { IPaginationProps } from "../../interfaces";
 import styles from "./styles.module.css";
+
+
 export const Pagination = ({
     totalPages,
     handleNextPage,
     handlePreviousPage,
     handlePageClick,
     currentPage,
-}) => {
+}: IPaginationProps) => {
     return (
         <div className={styles.pagination}>
             <button disabled={currentPage <= 1} onClick={handlePreviousPage} className={styles.arrow}>

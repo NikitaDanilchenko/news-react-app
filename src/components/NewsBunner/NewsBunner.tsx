@@ -1,10 +1,14 @@
 /* eslint-disable react/prop-types */
 import { formatTimeAgo } from "../../helpers/formatTimeAgo";
-import withSkeleton from "../../helpers/hocs/WithSkeleton";
+// import withSkeleton from "../../helpers/hocs/WithSkeleton";
+import { INews } from "../../interfaces";
 import { Image } from "../Image/Image";
 import styles from "./styles.module.css";
 
-const NewsBunner = ({ item }) => {
+interface Props {
+    item: INews
+}
+export const NewsBunner = ({ item }: Props) => {
     return (
         <div className={styles.bunner}>
             <Image image={item?.image} />
@@ -16,5 +20,5 @@ const NewsBunner = ({ item }) => {
     );
 };
 
-const NewsBunnerWithSkeleton = withSkeleton(NewsBunner, "bunner", 1);
-export default NewsBunnerWithSkeleton;
+// const NewsBunnerWithSkeleton = withSkeleton(NewsBunner, "bunner", 1, 'row');
+// export default NewsBunnerWithSkeleton;

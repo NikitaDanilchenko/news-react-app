@@ -1,9 +1,14 @@
 /* eslint-disable react/prop-types */
+import { DirectionType, SkeletonType } from "../../interfaces";
 import styles from "./styles.module.css";
 
+interface Props {
+    count?: number
+    type?: SkeletonType
+    direction?: DirectionType
+}
 
-
-export const Skeleton = ({ count = 1, type = "bunner", direction = 'column' }) => {
+export const Skeleton = ({ count = 1, type = "bunner", direction = 'column' }: Props) => {
     return (
         <>
             {count > 1 ? (
