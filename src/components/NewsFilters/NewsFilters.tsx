@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { getCategories } from "../../api/apiNews";
+import { useTheme } from "../../context/ThemeContext";
 import { useFetch } from "../../helpers/hooks/useFetch";
 import { CategoriesApiResponse, IFilters } from "../../interfaces";
 import { Categories } from "../Categories/Categories";
@@ -15,7 +16,7 @@ export const NewsFilters = ({filters, changeFilter}: Props) => {
     const { data: dataCategories } = useFetch<CategoriesApiResponse, null>(getCategories);
 
     return (
-        <div className={styles.filters}>
+        <div className={`${styles.filters}`}>
             {dataCategories ? (
                 <Slider>
                     <Categories
@@ -30,6 +31,7 @@ export const NewsFilters = ({filters, changeFilter}: Props) => {
             <Search
                 keywords={filters.keywords}
                 setKeywords={(keywords) => changeFilter("keywords", keywords)}
+                
             />
         </div>
     );
