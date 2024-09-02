@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { getNews } from "../../api/apiNews";
 import { PAGE_SIZE, TOTAL_PAGES } from "../../constants/constants";
+import { useTheme } from "../../context/ThemeContext";
 import { useDebounce } from "../../helpers/hooks/useDebounce";
 import { useFetch } from "../../helpers/hooks/useFetch";
 import { useFilters } from "../../helpers/hooks/useFilters";
@@ -10,10 +11,8 @@ import NewsListWithSkeleton from "../NewsList/NewsList";
 import { PaginationWrapper } from "../PaginationWrapper/PaginationWrapper";
 import styles from "./styles.module.css";
 
-interface Props {
-    isDark: boolean
-}
-export const NewsByFilters = ({isDark}: Props) => {
+
+export const NewsByFilters = () => {
     const { filters, changeFilter } = useFilters({
         page_number: 1,
         page_size: PAGE_SIZE,
@@ -42,7 +41,7 @@ export const NewsByFilters = ({isDark}: Props) => {
     };
     return (
         <section className={styles.section}>
-            <NewsFilters isDark={isDark} filters={filters} changeFilter={changeFilter} />
+            <NewsFilters  filters={filters} changeFilter={changeFilter} />
 
             <PaginationWrapper
                 top
@@ -52,7 +51,7 @@ export const NewsByFilters = ({isDark}: Props) => {
                 handlePageClick={handlePageClick}
                 currentPage={filters.page_number}
                 totalPages={TOTAL_PAGES}
-                isDark={isDark}
+                
             >
                 <NewsListWithSkeleton isLoading={isLoading} news={data?.news} />
             </PaginationWrapper>
