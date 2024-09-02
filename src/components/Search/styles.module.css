@@ -12,3 +12,13 @@
     border: 1px solid #f2f3f5;
     border-radius: 12px;
 }
+
+.search.dark  {
+    background-color: #23272f;
+    color: #f6f7f9;
+}
+
+.search.light {
+    background-color: white;
+    color: black;
+}

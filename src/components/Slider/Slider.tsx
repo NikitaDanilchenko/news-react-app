@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import React, { useRef } from "react";
 import styles from "./styles.module.css";
+import { useTheme } from "../../context/ThemeContext";
 
 interface Props {
     children: React.ReactElement
     step?: number
 }
-export const Slider = ({ children, step = 150 }: Props) => {
+export const Slider = ({ children, step = 150}: Props) => {
+    const {isDark} = useTheme()
     const sliderRef = useRef<HTMLElement | null>(null);
     const scrollLeft = () => {
         if(!sliderRef.current) return
@@ -17,7 +19,7 @@ export const Slider = ({ children, step = 150 }: Props) => {
         sliderRef.current.scrollLeft += step;
     };
     return (
-        <div className={styles.slider}>
+        <div className={`${styles.slider} ${isDark ? styles.dark : styles.light}`}>
             <button onClick={scrollLeft} className={styles.arrow}>{`<`}</button>
             {React.cloneElement(children, { ref: sliderRef })}
             <button

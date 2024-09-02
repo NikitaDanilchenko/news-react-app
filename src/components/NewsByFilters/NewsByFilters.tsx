@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { getNews } from "../../api/apiNews";
 import { PAGE_SIZE, TOTAL_PAGES } from "../../constants/constants";
+import { useTheme } from "../../context/ThemeContext";
 import { useDebounce } from "../../helpers/hooks/useDebounce";
 import { useFetch } from "../../helpers/hooks/useFetch";
 import { useFilters } from "../../helpers/hooks/useFilters";
@@ -9,6 +10,8 @@ import { NewsFilters } from "../NewsFilters/NewsFilters";
 import NewsListWithSkeleton from "../NewsList/NewsList";
 import { PaginationWrapper } from "../PaginationWrapper/PaginationWrapper";
 import styles from "./styles.module.css";
+
+
 export const NewsByFilters = () => {
     const { filters, changeFilter } = useFilters({
         page_number: 1,
@@ -38,7 +41,7 @@ export const NewsByFilters = () => {
     };
     return (
         <section className={styles.section}>
-            <NewsFilters filters={filters} changeFilter={changeFilter} />
+            <NewsFilters  filters={filters} changeFilter={changeFilter} />
 
             <PaginationWrapper
                 top
@@ -48,6 +51,7 @@ export const NewsByFilters = () => {
                 handlePageClick={handlePageClick}
                 currentPage={filters.page_number}
                 totalPages={TOTAL_PAGES}
+                
             >
                 <NewsListWithSkeleton isLoading={isLoading} news={data?.news} />
             </PaginationWrapper>
