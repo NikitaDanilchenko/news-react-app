@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import { getCategories } from "../../api/apiNews";
-import { useTheme } from "../../context/ThemeContext";
-import { useFetch } from "../../helpers/hooks/useFetch";
-import { CategoriesApiResponse, IFilters } from "../../interfaces";
+import { IFilters } from "../../interfaces";
+import { useAppDispatch } from "../../store";
+import { useGetCategoriesNewsQuery } from "../../store/services/newsApi";
+import { setFilters } from "../../store/slices/newsSlice";
 import { Categories } from "../Categories/Categories";
 import { Search } from "../Search/Search";
 import { Slider } from "../Slider/Slider";
@@ -10,28 +10,27 @@ import styles from "./styles.module.css";
 
 interface Props {
     filters: IFilters
-    changeFilter: (key: string, value: string | null | number) => void
 }
-export const NewsFilters = ({filters, changeFilter}: Props) => {
-    const { data: dataCategories } = useFetch<CategoriesApiResponse, null>(getCategories);
+export const NewsFilters = ({ filters }: Props) => {
+    const { data } = useGetCategoriesNewsQuery(null)
 
+    const dispatch = useAppDispatch()
     return (
         <div className={`${styles.filters}`}>
-            {dataCategories ? (
+            {data ? (
                 <Slider>
                     <Categories
-                        categories={dataCategories.categories}
+                        categories={data.categories}
                         selectedCategory={filters.category}
                         setSelectedCategory={(category) =>
-                            changeFilter("category", category)
+                            dispatch(setFilters({ key: "category", value: category }))
                         }
                     />
                 </Slider>
             ) : null}
             <Search
                 keywords={filters.keywords}
-                setKeywords={(keywords) => changeFilter("keywords", keywords)}
-                
+                setKeywords={(keywords) => dispatch(setFilters({ key: "keywords", value: keywords }))}
             />
         </div>
     );
