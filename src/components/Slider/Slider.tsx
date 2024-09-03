@@ -7,7 +7,7 @@ interface Props {
     children: React.ReactElement
     step?: number
 }
-export const Slider = ({ children, step = 150}: Props) => {
+export const Slider = ({ children, step = 150 }: Props) => {
     const {isDark} = useTheme()
     const sliderRef = useRef<HTMLElement | null>(null);
     const scrollLeft = () => {
