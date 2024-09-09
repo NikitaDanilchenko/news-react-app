@@ -7,7 +7,7 @@ interface Props {
     direction?: DirectionType
 }
 
-export const Skeleton = ({ count = 1, type = "bunner", direction = 'column' }: Props) => {
+export const Skeleton = ({ count = 1, type = "banner", direction = 'column' }: Props) => {
     return (
         <>
             {count > 1 ? (
@@ -15,13 +15,13 @@ export const Skeleton = ({ count = 1, type = "bunner", direction = 'column' }: P
                     {[...Array(count)].map((_, index) => (
                         <li
                             key={index}
-                            className={type === "bunner" ? styles.bunner : styles.item}
+                            className={type === "banner" ? styles.banner : styles.item}
                         ></li>
                     ))}
                 </ul>
             ) : (
                 <li
-                    className={type === "bunner" ? styles.bunner : styles.item}
+                    className={type === "banner" ? styles.banner : styles.item}
                 ></li>
             )}
         </>
