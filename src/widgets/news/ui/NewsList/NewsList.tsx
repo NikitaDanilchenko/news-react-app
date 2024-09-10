@@ -1,9 +1,9 @@
 
 import { INews } from "@/entities/news";
 import withSkeleton from "@/shared/hocs/WithSkeleton";
-import styles from "./styles.module.css";
 import { NewsCard } from "@/entities/news/ui/NewsCard/NewsCard";
 import { ReactNode } from "react";
+import styles from "./styles.module.css";
 
 interface Props {
     news?: INews[]
@@ -15,7 +15,13 @@ const NewsList = ({ news, type = 'item', viewNewsSlot }: Props) => {
     return (
         <ul className={`${type === 'item' ? styles.items : styles.banners}`}>
             {news?.map(item => {
-                return <NewsCard viewNewsSlot={viewNewsSlot} key={item.id} item={item} type={type}/>
+                return (
+                    <NewsCard
+                        key={item.id}
+                        item={item} type={type}
+                        viewNewsSlot={viewNewsSlot}
+                    />
+                )
             })}
         </ul>
     );
