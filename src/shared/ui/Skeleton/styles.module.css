@@ -22,7 +22,7 @@
     height: 80px;
 }
 
-.bunner,
+.banner,
 .item {
     background: linear-gradient(-90deg, #f0f0f0 0%, #f8f8f8 50%, #f0f0f0 100%);
     background-size: 400% 400%;
